@@ -3,13 +3,16 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-  	@books = @user.books
-  	@book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
+  	@book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施)
+    @books = @user.books
   end
 
   def index
   	@users = User.all #一覧表示するためにUserモデルのデータを全て変数に入れて取り出す。
   	@book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
+    @books = Book.all
+    @user = current_user
+  end
 
   def edit
   	@user = User.find(params[:id])
@@ -27,6 +30,9 @@ class UsersController < ApplicationController
   private
   def user_params
   	params.require(:user).permit(:name, :introduction, :profile_image)
+  end
+  def book_params
+    params.require(:book).permit(:title, :body)
   end
 
   #url直接防止　メソッドを自己定義してbefore_actionで発動。

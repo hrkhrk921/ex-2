@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     user_path(resource)
   end
 
+  def after_sign_up_path_for(resource)
+    user_path
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email])
     #sign_upの際にnameのデータ操作を許。追加したカラム。
